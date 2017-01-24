@@ -9,7 +9,10 @@
   },
   "keywords": [
     "✌",
-    "❤"
+    "twitter",
+    "delete",
+    "tweets",
+    "cli"
   ],
   "bin": {
     "flyaway": "index.js"
@@ -19,6 +22,10 @@
   ],
   "author": "Paul Molluzzo <paul@molluzzo.com> (https://paul.molluzzo.com)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulmolluzzo/flyaway.git"
+  },
   "dependencies": {
     "chalk": "^1.1.3",
     "dotenv": "^4.0.0",
