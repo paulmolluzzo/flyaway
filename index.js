@@ -37,7 +37,7 @@ fs.readFile(filePath, {flag: 'r', encoding: 'utf-8'}, (err, data) => {
     process.exit(0);
   }
 
-  data.toString().split(/\n/).forEach(function (line) {
+  data.toString().split(/\n/).forEach(line => {
     if (/^"\d+"/.test(line)) {
       tweetIDs.push(line.match(/^"\d+"/)[0].replace(/"/g, ''));
     }
