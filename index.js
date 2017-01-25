@@ -1,13 +1,22 @@
 #!/usr/bin/env node
 'use strict';
 
-require('dotenv').config({silent: true});
 const fs = require('fs');
 const path = require('path');
 const meow = require('meow');
 const Twitter = require('twitter');
 const ora = require('ora');
 const chalk = require('chalk');
+const args = require('minimist')(process.argv.slice(2));
+
+/**
+ * Grab all CLI arguments with flags
+ */
+const file = args.f;
+const consumerKey = args.ck;
+const consumerSecret = args.cs;
+const accessTokenKey = args.atk;
+const accessTokenSecret = args.ats;
 
 /**
  * Help message
@@ -19,13 +28,23 @@ meow(`
     ✌
 `);
 
-// bail if no file provided
-if (!process.argv[2]) {
-  console.error('Must specify a file!');
+/**
+ * Bail if no file provided
+ */
+if (!file) {
+  console.error(chalk.red('❌  Must specify a file!'));
   process.exit(0);
 }
 
-const filePath = path.resolve(process.argv[2]);
+/**
+ * Bail if some Twitter API credentials are missing
+ */
+if (!consumerKey || !consumerSecret || !accessTokenKey || !accessTokenSecret) {
+  console.error(chalk.red('❌  Twitter API credentials are missing'));
+  process.exit(0);
+}
+
+const filePath = path.resolve(file);
 const tweetIDs = [];
 
 /**
@@ -49,10 +68,10 @@ fs.readFile(filePath, {flag: 'r', encoding: 'utf-8'}, (err, data) => {
  * Pulls required values from env
  */
 const client = new Twitter({
-  consumer_key: process.env.consumer_key,
-  consumer_secret: process.env.consumer_secret,
-  access_token_key: process.env.access_token_key,
-  access_token_secret: process.env.access_token_secret
+  consumer_key: consumerKey,
+  consumer_secret: consumerSecret,
+  access_token_key: accessTokenKey,
+  access_token_secret: accessTokenSecret
 });
 
 /**
